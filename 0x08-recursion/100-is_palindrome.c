@@ -1,48 +1,44 @@
-#include <stdio.h>
+#include <string.h>
+#include "main.h"
 
 /**
- * is_palindrome - check if a given string is a palindrome
- *
- * @s: string to be checked
- *
- * Return: 1 if true; 0 otherwise
+ * is_palindrome - Returns 1 is string s is palindrom or 0 if not
+ * @s: String to be checked if is palindrome
+ * Return: 1 if s is palindrome
+ *	0 if otherwise
  */
-
-char *fwd(char *s);
-char *bck(char *s);
-
 int is_palindrome(char *s)
 {
-	if (fwd(s) == bck(s))
+	int strIndLen;
+
+	strIndLen = strlen(s) - 1;
+	if (strlen(s) == 0)
 	{
 		return (1);
 	}
-
-	return (0);
+	return (palindrome_check(0, strIndLen, s));
 }
 
-char *fwd(char *s)
+/**
+ * palindrome_check - Check if str is palindrome
+ * @index: Index of characters in string str
+ * @revStrInd: Reverse index of characters in string str
+ * @str: String to check if is palindrome
+ * Return: 1 if str is palindrome
+ *	0 if otherwise
+ */
+int palindrome_check(int index, int revStrInd, char *str)
 {
-	char *result;
-
-	if (*s != '\0')
+	if (str[index] != str[revStrInd])
 	{
-		*result = *s;
-		fwd(s + 1);
+		return (0);
 	}
-
-	return (result);
-}
-
-char *bck(char *s)
-{
-	char *result;
-
-	if (*s != '\0')
+	else if (index >= revStrInd)
 	{
- 		*result = *s;
-		bck(s + 1);
+		return (1);
 	}
-
-	return (result);
+	else
+	{
+		return (palindrome_check(index + 1, revStrInd - 1, str));
+	}
 }
